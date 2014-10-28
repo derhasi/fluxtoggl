@@ -7,6 +7,7 @@
 
 namespace Drupal\fluxtoggl\Plugin\Service;
 
+use AJT\Toggl\TogglClient;
 use Drupal\fluxservice\Plugin\Entity\Account;
 
 class TogglAccount extends Account implements TogglAccountInterface {
@@ -50,7 +51,39 @@ class TogglAccount extends Account implements TogglAccountInterface {
     return $form;
   }
 
+
   /**
+   * {@inheritdoc}
+   */
+  public function settingsFormValidate(array $form, array &$form_state) {
+    parent::settingsFormValidate($form, $form_state);
+
+    // Check if the API token provides us with a valid user.
+    $api_token = $form_state['values']['data']['api_token'];
+    $toggl_client = TogglClient::factory(array('api_key' => $api_token));
+
+    try {
+      // Check if a response can be made without throwing a Response exception.
+      $toggl_client->getCurrentUser();
+    }
+    catch (\Guzzle\HTTP\Exception\BadResponseException $e) {
+      form_set_error('data][api_token', t('The Toggl API token is not valid.'));
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsFormSubmit(array $form, array &$form_state) {
+    parent::settingsFormSubmit($form, $form_state);
+
+    // Each user has a Toggl ID and this is stored as remote identifier.
+    $toggl_client = TogglClient::factory(array('api_key' => $this->getAPIToken()));
+    $current_user = $toggl_client->getCurrentUser();
+    $this->setRemoteIdentifier($current_user['id']);
+  }
+
+    /**
    * Returns API token for the account.
    *
    * @return string
