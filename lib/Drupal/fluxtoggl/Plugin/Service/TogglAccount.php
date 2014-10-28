@@ -81,8 +81,8 @@ class TogglAccount extends Account implements TogglAccountInterface {
     parent::settingsFormSubmit($form, $form_state);
 
     // Each user has a Toggl ID and this is stored as remote identifier.
-    $toggl_client = TogglClient::factory(array('api_key' => $this->getAPIToken()));
-    $current_user = $toggl_client->getCurrentUser();
+    $client = $this->client();
+    $current_user = $client->getCurrentUser();
     $this->setRemoteIdentifier($current_user['id']);
   }
 
@@ -106,6 +106,13 @@ class TogglAccount extends Account implements TogglAccountInterface {
   public function setAPIToken($api_token) {
     $this->data->set('api_token', $api_token);
     return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function client() {
+    return TogglClient::factory(array('api_key' => $this->getAPIToken()));
   }
 
 }
