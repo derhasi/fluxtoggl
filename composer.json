@@ -1,0 +1,15 @@
+{
+    "name": "derhasi/fluxtoggl",
+    "description": "Drupal module for toggl service in fluxkraft",
+    "require": {
+        "ajt/guzzle-toggl": "~0.8"
+    },
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Johannes Haseitl",
+            "email": "johannes@undpaul.de"
+        }
+    ]
+}
+
