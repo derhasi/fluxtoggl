@@ -1,0 +1,7 @@
+name = FluxToggl
+description = "Links Toggl Time Tracking with fluxkraft"
+package = Customs
+core = 7.x
+configure = admin/config
+dependencies[] = composer_manager
+dependencies[] = fluxservice

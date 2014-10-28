@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Fluxkraft implementation for Toggl Time tracker.
+ */
+
+/**
+ * Implements hook_rules_category_info().
+ */
+function fluxtoggl_rules_category_info() {
+  $info =  array();
+
+  $info['fluxtoggl'] = array(
+    'label' => t('Twitter'),
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_fluxservice_plugin_directory().
+ */
+function fluxtoggl_fluxservice_plugin_directory() {
+  return 'lib/Drupal/fluxtoggl/Plugin';
+}
