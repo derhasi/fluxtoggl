@@ -10,6 +10,9 @@ namespace Drupal\fluxtoggl\Plugin\Service;
 use AJT\Toggl\TogglClient;
 use Drupal\fluxservice\Plugin\Entity\Account;
 
+/**
+ * Class TogglAccount
+ */
 class TogglAccount extends Account implements TogglAccountInterface {
 
   /**

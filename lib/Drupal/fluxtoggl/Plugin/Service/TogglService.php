@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains TogglService.
+ * Contains Drupal\fluxtoggl\Plugin\Service\TogglService.
  */
 
 namespace Drupal\fluxtoggl\Plugin\Service;
@@ -10,7 +10,7 @@ namespace Drupal\fluxtoggl\Plugin\Service;
 use Drupal\fluxservice\Plugin\Entity\Service;
 
 /**
- * Service plugin implementation for Twitter.
+ * Class TogglService
  */
 class TogglService extends Service implements TogglServiceInterface {
 

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains TogglServiceInterface.
+ * Contains Drupal\fluxtoggl\Plugin\Service\TogglServiceInterface.
  */
 
 namespace Drupal\fluxtoggl\Plugin\Service;
@@ -10,7 +10,7 @@ namespace Drupal\fluxtoggl\Plugin\Service;
 use Drupal\fluxservice\Plugin\Entity\ServiceInterface;
 
 /**
- * Service interface for Toggl Service.
+ * Interface TogglServiceInterface
  */
 interface TogglServiceInterface extends ServiceInterface {
 }
