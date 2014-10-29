@@ -12,7 +12,7 @@ function fluxtoggl_rules_category_info() {
   $info =  array();
 
   $info['fluxtoggl'] = array(
-    'label' => t('Twitter'),
+    'label' => t('Toggl'),
   );
 
   return $info;
