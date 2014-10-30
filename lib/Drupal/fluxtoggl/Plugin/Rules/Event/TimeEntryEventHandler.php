@@ -79,7 +79,11 @@ class TimeEntryEventHandler extends CronEventHandlerBase {
    * {@inheritdoc}
    */
   public function summary() {
-    return 'TimeEntryEventHandler';
+    $settings = $this->getSettings();
+    if ($settings['account'] && $account = entity_load_single('fluxservice_account', $settings['account'])) {
+      return t('A new Time entry appears for %account.', array('%account' => "{$account->label()}"));
+    }
+    return $this->eventInfo['label'];
   }
 
   /**
