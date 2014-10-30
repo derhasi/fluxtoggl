@@ -81,21 +81,21 @@ class TimeEntryTaskHandler extends RepetitiveTaskHandlerBase {
     return $this->account;
   }
 
-//  /**
-//   * {@inheritdoc}
-//   */
-//  public function afterTaskQueued() {
-//    try {
-//      $service = $this->getAccount()->getService();
-//
-//      // Continuously reschedule the task.
-//      db_update('rules_scheduler')
-//        ->condition('tid', $this->task['tid'])
-//        ->fields(array('date' => $this->task['date'] + $service->getPollingInterval()))
-//        ->execute();
-//    }
-//    catch(\RulesEvaluationException $e) {
-//      rules_log($e->msg, $e->args, $e->severity);
-//    }
-//  }
+  /**
+   * {@inheritdoc}
+   */
+  public function afterTaskQueued() {
+    try {
+      $service = $this->getAccount()->getService();
+
+      // Continuously reschedule the task.
+      db_update('rules_scheduler')
+        ->condition('tid', $this->task['tid'])
+        ->fields(array('date' => $this->task['date'] + $service->getPollingInterval()))
+        ->execute();
+    }
+    catch(\RulesEvaluationException $e) {
+      rules_log($e->msg, $e->args, $e->severity);
+    }
+  }
 }
