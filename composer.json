@@ -2,7 +2,7 @@
     "name": "derhasi/fluxtoggl",
     "description": "Drupal module for toggl service in fluxkraft",
     "require": {
-        "ajt/guzzle-toggl": "~0.8"
+        "ajt/guzzle-toggl": "dev-master#43f13f648"
     },
     "license": "GPLv3",
     "authors": [
