@@ -19,7 +19,7 @@ class TimeEntry extends RemoteEntity implements TimeEntryInterface {
    */
   public static function getInfo() {
     return array(
-      'name' => 'fluxtoogl_time_entry',
+      'name' => 'fluxtoggl_time_entry',
       'label' => t('Toggl: Time entry'),
       'service' => 'fluxtoggl',
       'controller class' => '\Drupal\fluxtoggl\TimeEntryController',

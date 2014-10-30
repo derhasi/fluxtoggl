@@ -19,27 +19,46 @@ class TimeEntryTaskHandler extends RepetitiveTaskHandlerBase {
   public function runTask() {
 
     $identifier = $this->task['identifier'];
-    $store = fluxservice_key_value('fluxtoggl.time-entries.at');
+    $store = fluxservice_key_value('fluxtoggl.time-entries.start_date');
 
-    $last_at = $store->get($identifier);
-
-    $now = new \DateTime();
-    $next_at = $now->format('c');
+    $last_start = $store->get($identifier);
 
     $arguments = [];
-    if (!empty($last_at)) {
-      $arguments['at'] = $last_at;
+    if (!empty($last_start)) {
+      $arguments['start_date'] = $last_start;
     }
+    $next_start = $last_start;
 
-    $client = $this->getAccount()->client();
+    $account = $this->getAccount();
+    $client = $account->client();
     $entries = $client->GetTimeEntries($arguments);
 
     foreach ($entries as $entry) {
-      $this->invokeEvent($entry);
+
+      // If the time entry has no end date, this is the current one and we skip
+      // processing, so we can grab that entry, when it is finished.
+      if (empty($entry['stop'])) {
+        break;
+      }
+      // As the API only processes a limit of 1000 entries per request, we have
+      // to get the last start date from the actual entries.
+      elseif ($entry['start'] > $next_start) {
+        $next_start = $entry['start'];
+      }
+
+      $entity = fluxservice_entify($entry, 'fluxtoggl_time_entry', $account);
+
+      rules_invoke_event($this->getEvent(), $account, $entity);
     }
 
-    //$store->set($identifier, $next_at);
+    $store->set($identifier, $next_start);
+  }
 
+  /**
+   * Gets the configured event name to dispatch.
+   */
+  public function getEvent() {
+    return $this->task['identifier'];
   }
 
   /**
